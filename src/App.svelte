@@ -1,30 +1,48 @@
 <script lang="ts">
   import svelteLogo from './assets/svelte.svg'
   import Counter from './lib/Counter.svelte'
+  import FeedbackList from "./components/FeedbackList.svelte";
+
+  let firstName = 'Hardey'
+  let lastName = 'Santoso'
+  let shouldShow = false
+  let list = [
+    { id: 1, name: 'Hardey', age: 20 },
+    { id: 2, name: 'Santoso', age: 20 },
+  ]
+  $: fullName = `${firstName} ${lastName}`
+
+  let feedback = [
+    { "id": 1, "rating": 8, "text": "Great product, highly recommended!" },
+    { "id": 2, "rating": 7, "text": "Good quality, but could be a bit cheaper." },
+    { "id": 3, "rating": 9, "text": "Excellent service, fast shipping!" },
+    { "id": 4, "rating": 4, "text": "Product arrived damaged, disappointed." },
+    { "id": 5, "rating": 6, "text": "Decent product, could be better." },
+    { "id": 6, "rating": 10, "text": "Absolutely love this product, exceeded my expectations!" },
+    { "id": 7, "rating": 3, "text": "Poor quality, wouldn't recommend." },
+    { "id": 8, "rating": 5, "text": "Average product, nothing special." },
+  ]
+
+
+  const onClick = () => {
+    firstName = 'something different'
+    shouldShow = !shouldShow
+    const maxId = Math.max(...list.map((item) => item.id))
+    list = [...list, {id: maxId+1, name: 'Hardey', age: 20}]
+  }
 </script>
 
-<main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank" rel="noreferrer"> 
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer"> 
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+<main class="container">
+  <!--{#if shouldShow}-->
+  <!--    <h1>Hi {firstName} {lastName}</h1>-->
+  <!--  else-->
+  <!--{/if}-->
+  <!--{#each list as item (item.id)}-->
+  <!--  <p>{item.id}. {item.name} is {item.age} years old</p>-->
+  <!--{/each}-->
 
-  <div class="card">
-    <Counter />
-  </div>
+  <FeedbackList {feedback}></FeedbackList>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
